@@ -12,7 +12,7 @@ const {execSync, execFileSync} = require('child_process');
 const escapeRegExp = require('escape-string-regexp');
 const log = require('lighthouse-logger');
 
-import {getLocalAppDataPath, toWinDirFormat, ChromePathNotSetError} from './utils';
+import {getWSLLocalAppDataPath, toWSLPath, ChromePathNotSetError} from './utils';
 
 const newLineRegex = /\r?\n/;
 
@@ -157,9 +157,9 @@ export function linux() {
 
 export function wsl() {
   // Manually populate the environment variables assuming it's the default config
-  process.env.LOCALAPPDATA = getLocalAppDataPath(`${process.env.PATH}`);
-  process.env.PROGRAMFILES = toWinDirFormat('C:/Program Files');
-  process.env['PROGRAMFILES(X86)'] = toWinDirFormat('C:/Program Files (x86)');
+  process.env.LOCALAPPDATA = getWSLLocalAppDataPath(`${process.env.PATH}`);
+  process.env.PROGRAMFILES = toWSLPath('C:/Program Files');
+  process.env['PROGRAMFILES(X86)'] = toWSLPath('C:/Program Files (x86)');
 
   return win32();
 }
